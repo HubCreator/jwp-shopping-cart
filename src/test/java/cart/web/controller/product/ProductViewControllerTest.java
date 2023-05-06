@@ -2,36 +2,27 @@ package cart.web.controller.product;
 
 import cart.domain.product.Product;
 import cart.domain.product.ProductCategory;
-import cart.web.controller.auth.LoginCheckInterceptor;
-import cart.web.controller.auth.LoginUserArgumentResolver;
-import cart.web.controller.config.WebConfig;
 import cart.web.controller.product.dto.ProductResponse;
 import cart.web.service.ProductService;
+import cart.web.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.FilterType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.ui.ModelMap;
 
+import java.util.Objects;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-@WebMvcTest(value = ProductViewController.class,
-        excludeFilters = @ComponentScan.Filter(
-                type = FilterType.ASSIGNABLE_TYPE,
-                classes = {
-                        WebConfig.class, LoginCheckInterceptor.class, LoginUserArgumentResolver.class
-                }
-
-        ))
+@WebMvcTest(ProductViewController.class)
 class ProductViewControllerTest {
 
     /**
@@ -48,6 +39,9 @@ class ProductViewControllerTest {
     @MockBean
     private ProductService productService;
 
+    @MockBean
+    private UserService userService;
+
     private final Product product = new Product(1L, "chicken", "chickenUrl", 30000, ProductCategory.KOREAN);
 
     @Test
@@ -60,7 +54,7 @@ class ProductViewControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
-        final ModelMap modelMap = mvcResult.getModelAndView().getModelMap();
+        final ModelMap modelMap = Objects.requireNonNull(mvcResult.getModelAndView()).getModelMap();
         final ProductResponse productResponse = (ProductResponse) modelMap.get("product");
         assertAll(
                 () -> assertThat(productResponse.getId()).isEqualTo(1),
