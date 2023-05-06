@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @JdbcTest
 @Import(ProductDao.class)
@@ -51,5 +52,38 @@ class ProductDaoTest {
 
         // then
         assertThat(products).hasSize(3);
+    }
+
+    @Test
+    void update() {
+        // given
+        final Long id = productDao.insert(product);
+
+        // when
+        final Product updatedProduct = new Product("파스타아님", "pastaUrl!!", 25000, ProductCategory.WESTERN);
+        final int updateCount = productDao.update(id, updatedProduct);
+        final Product findProduct = productDao.findById(id).get();
+
+        // then
+        assertThat(updateCount).isEqualTo(1);
+        assertAll(
+                () -> assertThat(findProduct.getProductNameValue()).isEqualTo("파스타아님"),
+                () -> assertThat(findProduct.getImageUrlValue()).isEqualTo("pastaUrl!!"),
+                () -> assertThat(findProduct.getPriceValue()).isEqualTo(25000)
+        );
+    }
+
+    @Test
+    void deleteById() {
+        // given
+        final Long id = productDao.insert(product);
+
+        // when
+        final int deleteCount = productDao.deleteById(id);
+        final Optional<Product> productOptional = productDao.findById(id);
+
+        // then
+        assertThat(deleteCount).isEqualTo(1);
+        assertThat(productOptional).isEmpty();
     }
 }
