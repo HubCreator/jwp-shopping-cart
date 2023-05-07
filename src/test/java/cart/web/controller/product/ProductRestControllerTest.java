@@ -53,7 +53,6 @@ class ProductRestControllerTest {
         // given
         final ProductRequest updateRequest = new ProductRequest("!chicken", "!chickenUrl", 20000, ProductCategory.WESTERN);
 
-
         // when
         Mockito.doNothing().when(productService).update(ArgumentMatchers.any(), ArgumentMatchers.any());
 
