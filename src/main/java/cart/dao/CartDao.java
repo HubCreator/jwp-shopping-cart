@@ -86,8 +86,8 @@ public class CartDao implements CartRepository {
     }
 
     @Override
-    public void delete(final Long cartProductId) {
-        final String query = "DELETE FROM cart c WHERE c.id = ?";
-        jdbcTemplate.update(query, cartProductId);
+    public int delete(final Long userId, final Long cartProductId) {
+        final String query = "DELETE FROM cart c WHERE c.user_id = ? and c.id = ?";
+        return jdbcTemplate.update(query, userId, cartProductId);
     }
 }

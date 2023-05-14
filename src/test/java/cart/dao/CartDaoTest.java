@@ -59,7 +59,7 @@ class CartDaoTest {
         final int originalSize = cartProducts.size();
 
         // when
-        cartDao.delete(1L);
+        cartDao.delete(1L, 1L);
         final int updatedSize = cartDao.findAllByUser2(user).size();
 
         // then

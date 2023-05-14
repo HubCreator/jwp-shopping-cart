@@ -6,7 +6,7 @@ import cart.domain.user.User;
 import cart.domain.user.UserEmail;
 import cart.domain.user.UserRepository;
 import cart.exception.UserNotFoundException;
-import cart.web.controller.cart.dto.AuthCredentials;
+import cart.web.controller.common.auth.dto.AuthCredentials;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,8 +53,8 @@ public class CartService {
     public void delete(final AuthCredentials authCredentials, final Long cartProductId) {
         final String userEmail = authCredentials.getEmail();
         final Optional<User> userOptional = userRepository.findUserByEmail(userEmail);
-        userOptional.orElseThrow(() -> new UserNotFoundException(new UserEmail(userEmail)));
+        final User user = userOptional.orElseThrow(() -> new UserNotFoundException(new UserEmail(userEmail)));
 
-        cartRepository.delete(cartProductId);
+        cartRepository.delete(user.getId(), cartProductId);
     }
 }

@@ -1,6 +1,6 @@
 package cart.web.controller.common.auth;
 
-import cart.web.controller.cart.dto.AuthCredentials;
+import cart.web.controller.common.auth.dto.AuthCredentials;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;

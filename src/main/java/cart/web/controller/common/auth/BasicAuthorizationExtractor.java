@@ -1,7 +1,7 @@
 package cart.web.controller.common.auth;
 
 import cart.exception.UnAuthorizedException;
-import cart.web.controller.cart.dto.AuthCredentials;
+import cart.web.controller.common.auth.dto.AuthCredentials;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 import javax.servlet.http.HttpServletRequest;

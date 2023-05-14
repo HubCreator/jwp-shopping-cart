@@ -1,4 +1,4 @@
-package cart.web.controller.cart.dto;
+package cart.web.controller.common.auth.dto;
 
 public class AuthCredentials {
 

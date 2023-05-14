@@ -1,5 +1,7 @@
 package cart.domain.user;
 
+import java.util.Objects;
+
 public final class User {
 
     private Long id;
@@ -21,6 +23,10 @@ public final class User {
         this.id = id;
         this.userEmail = new UserEmail(emailAddress);
         this.userPassword = new UserPassword(password);
+    }
+
+    public boolean hasSamePassword(final String password) {
+        return Objects.equals(password, getUserPasswordValue());
     }
 
     public Long getId() {

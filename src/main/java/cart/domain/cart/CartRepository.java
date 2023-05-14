@@ -12,5 +12,5 @@ public interface CartRepository {
 
     Long insert(Long userId, Long productId);
 
-    void delete(Long cartProductId);
+    int delete(Long userId, Long cartProductId);
 }

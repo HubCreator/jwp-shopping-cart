@@ -1,7 +1,7 @@
 package cart.web.controller.common.auth;
 
 import cart.exception.UnAuthorizedException;
-import cart.web.controller.cart.dto.AuthCredentials;
+import cart.web.controller.common.auth.dto.AuthCredentials;
 import cart.web.service.AuthService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
