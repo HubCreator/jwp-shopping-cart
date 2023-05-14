@@ -9,6 +9,10 @@ public final class User {
     private User() {
     }
 
+    public User(final UserEmail userEmail) {
+        this.userEmail = userEmail;
+    }
+
     public User(final String emailAddress, final String password) {
         this(null, emailAddress, password);
     }

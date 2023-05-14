@@ -1,7 +1,6 @@
 package cart.dao;
 
 import cart.domain.user.User;
-import cart.domain.user.UserEmail;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ class UserDaoTest {
     @Test
     void findUserByEmail() {
         // given
-        final Optional<User> userOptional = userDao.findUserByEmail(new UserEmail("a@a.com"));
+        final Optional<User> userOptional = userDao.findUserByEmail("a@a.com");
 
         // when
         final User user = userOptional.get();

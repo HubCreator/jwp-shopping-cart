@@ -1,11 +1,14 @@
 package cart.web.service;
 
 import cart.domain.user.User;
+import cart.domain.user.UserEmail;
 import cart.domain.user.UserRepository;
+import cart.exception.UserNotFoundException;
 import cart.web.controller.cart.dto.AuthCredentials;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -19,8 +22,11 @@ public class AuthService {
     }
 
     public boolean isValidUser(final AuthCredentials authCredentials) {
-        final Optional<User> userOptional = userRepository.findUserByEmailAndPassword(
-                authCredentials.getEmail(), authCredentials.getPassword());
-        return userOptional.isPresent();
+        final UserEmail userEmail = new UserEmail(authCredentials.getEmail());
+
+        final Optional<User> userOptional1 = userRepository.findUserByEmail(authCredentials.getEmail());
+        final User user = userOptional1.orElseThrow(() -> new UserNotFoundException(userEmail));
+
+        return Objects.equals(authCredentials.getPassword(), user.getUserPasswordValue());
     }
 }

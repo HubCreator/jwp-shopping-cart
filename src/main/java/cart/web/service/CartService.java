@@ -26,34 +26,34 @@ public class CartService {
     }
 
     public List<CartProduct> getCartProducts1(final User userRequest) {
-        final Optional<User> userOptional = userRepository.findUserByEmail(userRequest.getUserEmail());
+        final Optional<User> userOptional = userRepository.findUserByEmail(userRequest.getUserEmailValue());
         final User user = userOptional.orElseThrow(() -> new UserNotFoundException(userRequest.getUserEmail()));
 
         return cartRepository.findAllByUser1(user);
     }
 
     public List<CartProduct> getCartProducts2(final AuthCredentials authCredentials) {
-        final UserEmail userEmail = new UserEmail(authCredentials.getEmail());
+        final String userEmail = authCredentials.getEmail();
         final Optional<User> userOptional = userRepository.findUserByEmail(userEmail);
-        final User user = userOptional.orElseThrow(() -> new UserNotFoundException(userEmail));
+        final User user = userOptional.orElseThrow(() -> new UserNotFoundException(new UserEmail(userEmail)));
 
         return cartRepository.findAllByUser2(user);
     }
 
     @Transactional
     public Long add(final AuthCredentials authCredentials, final Long productId) {
-        final UserEmail userEmail = new UserEmail(authCredentials.getEmail());
+        final String userEmail = authCredentials.getEmail();
         final Optional<User> userOptional = userRepository.findUserByEmail(userEmail);
-        userOptional.orElseThrow(() -> new UserNotFoundException(userEmail));
+        userOptional.orElseThrow(() -> new UserNotFoundException(new UserEmail(userEmail)));
 
         return cartRepository.insert(userOptional.get().getId(), productId);
     }
 
     @Transactional
     public void delete(final AuthCredentials authCredentials, final Long cartProductId) {
-        final UserEmail userEmail = new UserEmail(authCredentials.getEmail());
+        final String userEmail = authCredentials.getEmail();
         final Optional<User> userOptional = userRepository.findUserByEmail(userEmail);
-        userOptional.orElseThrow(() -> new UserNotFoundException(userEmail));
+        userOptional.orElseThrow(() -> new UserNotFoundException(new UserEmail(userEmail)));
 
         cartRepository.delete(cartProductId);
     }
