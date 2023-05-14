@@ -3,8 +3,8 @@ package cart.web.controller.cart;
 import cart.domain.cart.CartProduct;
 import cart.domain.product.Product;
 import cart.domain.product.ProductCategory;
-import cart.web.controller.auth.LoginCheckInterceptor;
-import cart.web.controller.auth.LoginUserArgumentResolver;
+import cart.web.controller.common.auth.LoginCheckInterceptor;
+import cart.web.controller.common.auth.LoginUserArgumentResolver;
 import cart.web.controller.config.WebConfig;
 import cart.web.service.CartService;
 import org.junit.jupiter.api.DisplayName;
@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 )
 class CartRestControllerTest {
 
-    private static final String COOKIE_VALUE = "Basic YUBhLmNvbTpwYXNzd29yZDE=";
+    private static final String AUTHORIZATION_VALUE = "Basic YUBhLmNvbTpwYXNzd29yZDE=";
 
     @Autowired
     private MockMvc mockMvc;
@@ -51,7 +51,7 @@ class CartRestControllerTest {
         when(cartService.add(any(), any())).thenReturn(1L);
 
         // when, then
-        mockMvc.perform(post("/cart/1").header("Authorization", COOKIE_VALUE))
+        mockMvc.perform(post("/cart/1").header("Authorization", AUTHORIZATION_VALUE))
                 .andExpect(status().isCreated());
     }
 
@@ -62,7 +62,7 @@ class CartRestControllerTest {
         doNothing().when(cartService).delete(any(), any());
 
         // when, then
-        mockMvc.perform(delete("/cart/1").header("Authorization", COOKIE_VALUE))
+        mockMvc.perform(delete("/cart/1").header("Authorization", AUTHORIZATION_VALUE))
                 .andExpect(status().isNoContent());
     }
 
@@ -82,7 +82,7 @@ class CartRestControllerTest {
         when(cartService.getCartProducts2(any())).thenReturn(cartProducts);
 
         // when
-        mockMvc.perform(get("/cart/all").header("Authorization", COOKIE_VALUE))
+        mockMvc.perform(get("/cart/all").header("Authorization", AUTHORIZATION_VALUE))
                 .andExpect(status().isOk());
     }
 }

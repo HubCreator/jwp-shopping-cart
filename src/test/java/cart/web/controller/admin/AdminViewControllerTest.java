@@ -2,8 +2,8 @@ package cart.web.controller.admin;
 
 import cart.domain.product.Product;
 import cart.domain.product.ProductCategory;
-import cart.web.controller.auth.LoginCheckInterceptor;
-import cart.web.controller.auth.LoginUserArgumentResolver;
+import cart.web.controller.common.auth.LoginCheckInterceptor;
+import cart.web.controller.common.auth.LoginUserArgumentResolver;
 import cart.web.controller.config.WebConfig;
 import cart.web.service.ProductService;
 import org.junit.jupiter.api.DisplayName;

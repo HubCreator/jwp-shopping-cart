@@ -1,9 +1,9 @@
 package cart.web.controller.cart;
 
 import cart.domain.cart.CartProduct;
-import cart.web.controller.auth.AuthorizedUser;
 import cart.web.controller.cart.dto.AuthCredentials;
 import cart.web.controller.cart.dto.CartResponse;
+import cart.web.controller.common.auth.AuthorizedUser;
 import cart.web.service.CartService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,8 +1,8 @@
 package cart.web.controller.product;
 
 import cart.domain.product.ProductCategory;
-import cart.web.controller.auth.LoginCheckInterceptor;
-import cart.web.controller.auth.LoginUserArgumentResolver;
+import cart.web.controller.common.auth.LoginCheckInterceptor;
+import cart.web.controller.common.auth.LoginUserArgumentResolver;
 import cart.web.controller.config.WebConfig;
 import cart.web.controller.product.dto.ProductRequest;
 import cart.web.service.ProductService;
@@ -11,6 +11,7 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -18,12 +19,13 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.nio.charset.StandardCharsets;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -60,15 +62,15 @@ class ProductRestControllerTest {
     @Test
     void addProduct_success() throws Exception {
         // given
-        when(productService.save(any())).thenReturn(1L);
+        Mockito.when(productService.save(Mockito.any())).thenReturn(1L);
 
         // when, then
-        mockMvc.perform(post("/products")
+        mockMvc.perform(MockMvcRequestBuilders.post("/products")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(productRequest))
                         .characterEncoding(StandardCharsets.UTF_8)
                 )
-                .andExpect(status().isCreated());
+                .andExpect(MockMvcResultMatchers.status().isCreated());
     }
 
     @DisplayName("상품의 정보를 정상적으로 입력하지 않으면 예외가 발생한다")

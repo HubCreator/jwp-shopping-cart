@@ -1,4 +1,4 @@
-package cart.web.controller.auth;
+package cart.web.controller.common.auth;
 
 import cart.exception.UnAuthorizedException;
 import cart.web.controller.cart.dto.AuthCredentials;

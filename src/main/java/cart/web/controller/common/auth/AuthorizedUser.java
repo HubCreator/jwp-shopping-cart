@@ -1,4 +1,4 @@
-package cart.web.controller.auth;
+package cart.web.controller.common.auth;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
